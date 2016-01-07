@@ -21,6 +21,16 @@
 		format="boolean"/>
 	<attr name="back_color"
 		format="color"/>
+	<attr name="start_location">
+		<flag name="top"
+			value="1"/>
+		<flag name="bottom"
+			value="2"/>
+		<flag name="left"
+			value="3"/>
+		<flag name="right"
+			value="4"/>
+	</attr>
 
 
 	<declare-styleable name="ProgressView">
@@ -34,5 +44,6 @@
 		<attr name="need_back_circle"/>
 		<attr name="need_back_color"/>
 		<attr name="back_color"/>
+		<attr name="start_location"/>
 	</declare-styleable>
 </resources>

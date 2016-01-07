@@ -17,6 +17,7 @@
 		app:progress_radius="100dp"
 		app:progress_text_size="20sp"
 		app:need_back_color="true"
+		app:start_location="left"
 		app:back_color="@color/colorAccent"
 		android:layout_height="wrap_content"
 		android:layout_centerInParent="true"

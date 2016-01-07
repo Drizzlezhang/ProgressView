@@ -34,6 +34,14 @@ public class ProgressView extends View {
 	private int circlebackcolor;
 	//进度圆颜色
 	private int backColor;
+	//进度条起始位置
+	private int startLocation;
+
+	//进度条四个起始位置
+	public static final int STARTTOP = 1;
+	public static final int STARTBOTTOM = 2;
+	public static final int STARTLEFT = 3;
+	public static final int STARTRIGHT = 4;
 
 	//进度值
 	private int progress = 0;
@@ -76,6 +84,7 @@ public class ProgressView extends View {
 		needBackCircle = array.getBoolean(R.styleable.ProgressView_need_back_circle, true);
 		needBackColor = array.getBoolean(R.styleable.ProgressView_back_color, true);
 		backColor = array.getColor(R.styleable.ProgressView_back_color, Color.BLACK);
+		startLocation = array.getInt(R.styleable.ProgressView_start_location, STARTTOP);
 		array.recycle();
 		initPaints();
 	}
@@ -131,7 +140,7 @@ public class ProgressView extends View {
 		progressPaint.setColor(circlestrokecolor);
 		progressRectf = new RectF(getMeasuredWidth() / 2 - circleradius, getMeasuredHeight() / 2 - circleradius,
 			getMeasuredWidth() / 2 + circleradius, getMeasuredHeight() / 2 + circleradius);
-		canvas.drawArc(progressRectf, 270, 360 * progress / 100, false, progressPaint);
+		canvas.drawArc(progressRectf, getStartDegree(startLocation), 360 * progress / 100, false, progressPaint);
 		//再画文字
 		if (text == null) {
 			text = "";
@@ -142,12 +151,33 @@ public class ProgressView extends View {
 		canvas.drawText(text, (getWidth() - textRect.width()) / 2, (getHeight() + textRect.height()) / 2, textPaint);
 	}
 
+	private int getStartDegree(int startInt) {
+		switch (startInt) {
+			case STARTTOP:
+				return 270;
+			case STARTBOTTOM:
+				return 90;
+			case STARTLEFT:
+				return 180;
+			case STARTRIGHT:
+				return 0;
+			default:
+				break;
+		}
+		return 270;
+	}
+
 	public String getText() {
 		return text;
 	}
 
 	public void setText(String text) {
 		this.text = text;
+		invalidate();
+	}
+
+	public void setText(int textId) {
+		this.text = getResources().getString(textId);
 		invalidate();
 	}
 
@@ -240,5 +270,9 @@ public class ProgressView extends View {
 
 	public void setBackColor(int backColor) {
 		this.backColor = backColor;
+	}
+
+	public void setStartLocation(int startLocation) {
+		this.startLocation = startLocation;
 	}
 }

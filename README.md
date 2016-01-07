@@ -11,6 +11,7 @@
     need_back_circle         //设定是否需要背景圆弧,默认需要
     need_back_color          //设定是否需要进度圆颜色,默认需要
     back_color               //进度圆颜色
+    start_location           //进度圆弧起始位置
 ### 也可以通过Java代码设置属性
 
 
