@@ -167,6 +167,38 @@ public class ProgressView extends View {
 		canvas.drawText(text, (getWidth() - textRect.width()) / 2, (getHeight() + textRect.height()) / 2, textPaint);
 	}
 
+	public void setProgress(int progress) {
+		if (progress >= 0 && progress <= 100) {
+			this.progress = progress;
+			progressChangeListener.onProgressChange(progress);
+			invalidate();
+		} else if (progress < 0) {
+			this.progress = 0;
+			invalidate();
+		} else if (progress > 100) {
+			this.progress = 100;
+			invalidate();
+		}
+	}
+
+	//结束动画
+	public void finish() {
+		ProgressAnimation animation = new ProgressAnimation(this, this.getProgress(), 100);
+		animation.setDuration((100 - this.getProgress()) * 5);
+		this.startAnimation(animation);
+	}
+	
+	//自定义动画
+	public void playAnimation(int start, int end, int duration) {
+		ProgressAnimation animation = new ProgressAnimation(this, start, end);
+		animation.setDuration(duration);
+		this.startAnimation(animation);
+	}
+
+	public void setOnProgressChangeListener(OnProgressChangeListener progressChangeListener) {
+		this.progressChangeListener = progressChangeListener;
+	}
+
 	private int getStartDegree(int startInt) {
 		switch (startInt) {
 			case STARTTOP:
@@ -255,20 +287,6 @@ public class ProgressView extends View {
 		return progress;
 	}
 
-	public void setProgress(int progress) {
-		if (progress >= 0 && progress <= 100) {
-			this.progress = progress;
-			progressChangeListener.onProgressChange(progress);
-			invalidate();
-		} else if (progress < 0) {
-			this.progress = 0;
-			invalidate();
-		} else if (progress > 100) {
-			this.progress = 100;
-			invalidate();
-		}
-	}
-
 	public boolean isNeedBackCircle() {
 		return needBackCircle;
 	}
@@ -297,22 +315,6 @@ public class ProgressView extends View {
 
 	public void setStartLocation(int startLocation) {
 		this.startLocation = startLocation;
-	}
-
-	public void playAnimation(int start, int end, int duration) {
-		ProgressAnimation animation = new ProgressAnimation(this, start, end);
-		animation.setDuration(duration);
-		this.startAnimation(animation);
-	}
-
-	public void finish() {
-		ProgressAnimation animation = new ProgressAnimation(this, this.getProgress(), 100);
-		animation.setDuration((100 - this.getProgress()) * 5);
-		this.startAnimation(animation);
-	}
-
-	public void setOnProgressChangeListener(OnProgressChangeListener progressChangeListener) {
-		this.progressChangeListener = progressChangeListener;
 	}
 
 	private class ProgressAnimation extends Animation {
