@@ -1,5 +1,9 @@
 ## ProgressView
 一个View来显示进度值
+
+### Sample
+ ![first png](/png/first.png)
+ ![second png](/png/second.png)
 ### 设置属性
     progress_text            //进度圆中心文字(默认为空)
     progress_text_size       //进度圆中心文字大小（默认12sp）
