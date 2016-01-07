@@ -20,5 +20,17 @@
 
     //另外在代码中可以设置进度值
     progressView.setProgress(...);
+    //设置进度动画
+    progressView.playAnimation(int start, int end, int duration);
+    //结束动画
+    progressView.finish();
+
+### 设置监听器
+
+    progressView.setOnProgressChangeListener(new OnProgressChangeListener() {
+     @Override public void onProgressChange(int progress) {
+        //TODO
+     }
+    });
 
 > 效果图稍后放出。

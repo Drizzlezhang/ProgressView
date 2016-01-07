@@ -9,13 +9,17 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by drizzle on 16/1/6.
  */
 public class ProgressView extends View {
+
+	private OnProgressChangeListener progressChangeListener;
 
 	//属性
 	//中心文字(默认为空)
@@ -54,8 +58,10 @@ public class ProgressView extends View {
 	//写字的画笔
 	private Paint textPaint;
 	private Rect textRect;
-	//背景圆形和背景色的画笔
+	//背景色的画笔
 	private Paint backPaint;
+	//背景圆形的画笔
+	private Paint backCirclePaint;
 	//进度圆的画笔
 	private Paint progressPaint;
 	private RectF progressRectf;
@@ -96,6 +102,10 @@ public class ProgressView extends View {
 		textPaint.setAntiAlias(true);
 		backPaint = new Paint();
 		backPaint.setAntiAlias(true);
+		backPaint.setStyle(Paint.Style.FILL);
+		backCirclePaint = new Paint();
+		backCirclePaint.setAntiAlias(true);
+		backCirclePaint.setStyle(Paint.Style.STROKE);
 		progressPaint = new Paint();
 		progressPaint.setAntiAlias(true);
 		progressPaint.setStyle(Paint.Style.STROKE);
@@ -122,22 +132,29 @@ public class ProgressView extends View {
 	}
 
 	@Override protected void onDraw(Canvas canvas) {
-		//先画背景颜色和背景圆弧
+		//先画背景颜色
 		if (needBackColor) {
-			backPaint.setStyle(Paint.Style.FILL);
 			backPaint.setColor(backColor);
+			//RadialGradient lg =
+			//	new RadialGradient(getMeasuredWidth() / 2, getMeasuredHeight() / 2, circleradius, Color.RED, Color.BLUE,
+			//		Shader.TileMode.REPEAT);  //
+			//backPaint.setShader(lg);
 			canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, circleradius * progress / 100,
 				backPaint);
 		}
+		//画背景圆弧
 		if (needBackCircle) {
-			backPaint.setStyle(Paint.Style.STROKE);
-			backPaint.setStrokeWidth(circlestrokewidth);
-			backPaint.setColor(circlebackcolor);
-			canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, circleradius, backPaint);
+			backCirclePaint.setStrokeWidth(circlestrokewidth);
+			backCirclePaint.setColor(circlebackcolor);
+			canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, circleradius, backCirclePaint);
 		}
 		//再画进度圆弧
 		progressPaint.setStrokeWidth(circlestrokewidth);
 		progressPaint.setColor(circlestrokecolor);
+		//RadialGradient lg =
+		//	new RadialGradient(getMeasuredWidth() / 2, getMeasuredHeight() / 2, circleradius, Color.RED, Color.BLUE,
+		//		Shader.TileMode.REPEAT);
+		//progressPaint.setShader(lg);
 		progressRectf = new RectF(getMeasuredWidth() / 2 - circleradius, getMeasuredHeight() / 2 - circleradius,
 			getMeasuredWidth() / 2 + circleradius, getMeasuredHeight() / 2 + circleradius);
 		canvas.drawArc(progressRectf, getStartDegree(startLocation), 360 * progress / 100, false, progressPaint);
@@ -242,6 +259,7 @@ public class ProgressView extends View {
 	public void setProgress(int progress) {
 		if (progress >= 0 && progress <= 100) {
 			this.progress = progress;
+			progressChangeListener.onProgressChange(progress);
 			invalidate();
 		}
 	}
@@ -274,5 +292,39 @@ public class ProgressView extends View {
 
 	public void setStartLocation(int startLocation) {
 		this.startLocation = startLocation;
+	}
+
+	public void playAnimation(int start, int end, int duration) {
+		ProgressAnimation animation = new ProgressAnimation(this, start, end);
+		animation.setDuration(duration);
+		this.startAnimation(animation);
+	}
+
+	public void finish() {
+		ProgressAnimation animation = new ProgressAnimation(this, this.getProgress(), 100);
+		animation.setDuration((100 - this.getProgress()) * 5);
+		this.startAnimation(animation);
+	}
+
+	public void setOnProgressChangeListener(OnProgressChangeListener progressChangeListener) {
+		this.progressChangeListener = progressChangeListener;
+	}
+
+	private class ProgressAnimation extends Animation {
+		private ProgressView progressView;
+		private int startProgress;
+		private int endProgress;
+
+		public ProgressAnimation(ProgressView progressView, int startProgress, int endProgress) {
+			this.progressView = progressView;
+			this.startProgress = startProgress;
+			this.endProgress = endProgress;
+		}
+
+		@Override protected void applyTransformation(float interpolatedTime, Transformation t) {
+			int progress = (int) (startProgress + ((endProgress - startProgress) * interpolatedTime));
+			progressView.setProgress(progress);
+			progressView.requestLayout();
+		}
 	}
 }
