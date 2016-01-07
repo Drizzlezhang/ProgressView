@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<attr name="progress_text"
+		format="string"/>
+	<attr name="progress_text_size"
+		format="dimension"/>
+	<attr name="progress_text_color"
+		format="color"/>
+	<attr name="progress_radius"
+		format="dimension"/>
+	<attr name="progress_stroke_width"
+		format="dimension"/>
+	<attr name="progress_stroke_color"
+		format="color"/>
+	<attr name="progress_back_color"
+		format="color"/>
+	<attr name="need_back_circle"
+		format="boolean"/>
+	<attr name="need_back_color"
+		format="boolean"/>
+	<attr name="back_color"
+		format="color"/>
+
+
+	<declare-styleable name="ProgressView">
+		<attr name="progress_text"/>
+		<attr name="progress_text_size"/>
+		<attr name="progress_text_color"/>
+		<attr name="progress_radius"/>
+		<attr name="progress_stroke_width"/>
+		<attr name="progress_stroke_color"/>
+		<attr name="progress_back_color"/>
+		<attr name="need_back_circle"/>
+		<attr name="need_back_color"/>
+		<attr name="back_color"/>
+	</declare-styleable>
+</resources>
