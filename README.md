@@ -1,5 +1,5 @@
 ## ProgressView
-一个有趣的自定义View来显示进度值
+一个View来显示进度值
 ### 设置属性
     progress_text            //进度圆中心文字(默认为空)
     progress_text_size       //进度圆中心文字大小（默认12sp）
@@ -16,16 +16,15 @@
 
 
 
-    progressView.setText("...");  //可以设置的属性同上
-
-    //另外在代码中可以设置进度值
+    progressView.setText("...");  //可以设置的属性同上,文字不需要的话设置为空即可
+    //在代码中设置进度值
     progressView.setProgress(...);
-    //设置进度动画
+    //进度动画
     progressView.playAnimation(int start, int end, int duration);
     //结束动画
     progressView.finish();
 
-### 设置监听器
+### 进度监听器
 
     progressView.setOnProgressChangeListener(new OnProgressChangeListener() {
      @Override public void onProgressChange(int progress) {
