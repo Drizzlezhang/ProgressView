@@ -12,7 +12,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by drizzle on 16/1/6.

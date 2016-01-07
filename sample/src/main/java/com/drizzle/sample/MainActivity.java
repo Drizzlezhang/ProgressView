@@ -21,9 +21,6 @@ public class MainActivity extends AppCompatActivity {
 		button = (Button) findViewById(R.id.button);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override public void onClick(View v) {
-				//ProgressAnimation animation = new ProgressAnimation(progressView,100);
-				//animation.setDuration(2000);
-				//progressView.startAnimation(animation);
 				progressView.finish();
 			}
 		});
