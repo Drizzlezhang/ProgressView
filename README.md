@@ -16,6 +16,8 @@
     need_back_color          //设定是否需要进度圆颜色,默认需要
     back_color               //进度圆颜色
     start_location           //进度圆弧起始位置
+
+    在设置View尺寸时最好是设置好半径后宽高都设为wrap_content，会根据半径得到一个合适的View尺寸。
 ### 也可以通过Java代码设置属性
 
 
