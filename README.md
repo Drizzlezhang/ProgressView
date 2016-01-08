@@ -6,6 +6,8 @@
 ### 截图
  ![first png](/png/first.png)
  ![second png](/png/second.png)
+
+##  How to use it?
 ### 设置属性
     progress_text            //进度圆中心文字(默认为空)
     progress_text_size       //进度圆中心文字大小（默认12sp）
