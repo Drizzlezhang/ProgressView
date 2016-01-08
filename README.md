@@ -2,6 +2,8 @@
 一个View来显示进度值
 
 ### Sample
+ ![sample gif](/png/sample.gif)
+### 截图
  ![first png](/png/first.png)
  ![second png](/png/second.png)
 ### 设置属性
