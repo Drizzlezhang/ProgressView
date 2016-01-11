@@ -9,9 +9,12 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import com.nineoldandroids.view.ViewHelper;
 
 /**
  * Created by drizzle on 16/1/6.
@@ -64,6 +67,8 @@ public class ProgressView extends View {
 	//进度圆的画笔
 	private Paint progressPaint;
 	private RectF progressRectf;
+
+	int mLastX, mLastY = 0;
 
 	public ProgressView(Context context) {
 		this(context, null);
@@ -181,13 +186,38 @@ public class ProgressView extends View {
 		}
 	}
 
+	@Override public boolean onTouchEvent(MotionEvent event) {
+		int x = (int) event.getRawX();//获取的是相对屏幕的坐标而不是相对于view的坐标
+		int y = (int) event.getRawY();
+		switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				break;
+			case MotionEvent.ACTION_MOVE:
+				int deltaX = x - mLastX;
+				int deltaY = y - mLastY;
+				int translationX = (int) ViewHelper.getTranslationX(this) + deltaX;
+				int translationY = (int) ViewHelper.getTranslationY(this) + deltaY;
+				ViewHelper.setTranslationX(this, translationX);
+				ViewHelper.setTranslationY(this, translationY);
+				break;
+			case MotionEvent.ACTION_UP:
+				break;
+			default:
+				break;
+		}
+		mLastX = x;
+		mLastY = y;
+		return true;
+	}
+
 	//结束动画
 	public void finish() {
 		ProgressAnimation animation = new ProgressAnimation(this, this.getProgress(), 100);
 		animation.setDuration((100 - this.getProgress()) * 5);
+		animation.setInterpolator(new AccelerateInterpolator());
 		this.startAnimation(animation);
 	}
-	
+
 	//自定义动画
 	public void playAnimation(int start, int end, int duration) {
 		ProgressAnimation animation = new ProgressAnimation(this, start, end);
