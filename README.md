@@ -1,5 +1,6 @@
 ## ProgressView
-一个View来显示进度值
+
++ 加入了手指拖动全屏幕移动的效果
 
 ### Sample
  ![sample gif](/png/sample.gif)

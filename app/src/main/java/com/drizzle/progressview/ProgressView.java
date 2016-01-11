@@ -186,6 +186,11 @@ public class ProgressView extends View {
 		}
 	}
 
+	/**
+	 * 用nineold实现手指拖动全屏
+	 * @param event
+	 * @return
+	 */
 	@Override public boolean onTouchEvent(MotionEvent event) {
 		int x = (int) event.getRawX();//获取的是相对屏幕的坐标而不是相对于view的坐标
 		int y = (int) event.getRawY();
