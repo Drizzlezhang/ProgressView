@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-import com.nineoldandroids.view.ViewHelper;
 
 /**
  * Created by drizzle on 16/1/6.
@@ -187,9 +186,7 @@ public class ProgressView extends View {
 	}
 
 	/**
-	 * 用nineold实现手指拖动全屏
-	 * @param event
-	 * @return
+	 * 实现手指拖动全屏
 	 */
 	@Override public boolean onTouchEvent(MotionEvent event) {
 		int x = (int) event.getRawX();//获取的是相对屏幕的坐标而不是相对于view的坐标
@@ -200,10 +197,10 @@ public class ProgressView extends View {
 			case MotionEvent.ACTION_MOVE:
 				int deltaX = x - mLastX;
 				int deltaY = y - mLastY;
-				int translationX = (int) ViewHelper.getTranslationX(this) + deltaX;
-				int translationY = (int) ViewHelper.getTranslationY(this) + deltaY;
-				ViewHelper.setTranslationX(this, translationX);
-				ViewHelper.setTranslationY(this, translationY);
+				int translationX = (int) getTranslationX() + deltaX;
+				int translationY = (int) getTranslationY() + deltaY;
+				setTranslationX(translationX);
+				setTranslationY(translationY);
 				break;
 			case MotionEvent.ACTION_UP:
 				break;
