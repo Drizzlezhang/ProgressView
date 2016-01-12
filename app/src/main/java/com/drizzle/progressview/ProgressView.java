@@ -42,6 +42,8 @@ public class ProgressView extends View {
 	//进度条起始位置
 	private int startLocation;
 
+	private boolean isTouchSlide;
+
 	//进度条四个起始位置
 	public static final int STARTTOP = 1;
 	public static final int STARTBOTTOM = 2;
@@ -94,6 +96,7 @@ public class ProgressView extends View {
 		needBackColor = array.getBoolean(R.styleable.ProgressView_back_color, true);
 		backColor = array.getColor(R.styleable.ProgressView_back_color, Color.BLACK);
 		startLocation = array.getInt(R.styleable.ProgressView_start_location, STARTTOP);
+		isTouchSlide = array.getBoolean(R.styleable.ProgressView_is_touch_slide, false);
 		array.recycle();
 		initPaints();
 	}
@@ -195,12 +198,16 @@ public class ProgressView extends View {
 			case MotionEvent.ACTION_DOWN:
 				break;
 			case MotionEvent.ACTION_MOVE:
-				int deltaX = x - mLastX;
-				int deltaY = y - mLastY;
-				int translationX = (int) getTranslationX() + deltaX;
-				int translationY = (int) getTranslationY() + deltaY;
-				setTranslationX(translationX);
-				setTranslationY(translationY);
+				if (isTouchSlide) {
+					int deltaX = x - mLastX;
+					int deltaY = y - mLastY;
+					int translationX = (int) getTranslationX() + deltaX;
+					int translationY = (int) getTranslationY() + deltaY;
+					setTranslationX(translationX);
+					setTranslationY(translationY);
+				} else {
+					//TODO
+				}
 				break;
 			case MotionEvent.ACTION_UP:
 				break;
@@ -347,6 +354,10 @@ public class ProgressView extends View {
 
 	public void setStartLocation(int startLocation) {
 		this.startLocation = startLocation;
+	}
+
+	public void setIsTouchSlide(boolean isTouchSlide) {
+		this.isTouchSlide = isTouchSlide;
 	}
 
 	private class ProgressAnimation extends Animation {

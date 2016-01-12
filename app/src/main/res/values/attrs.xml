@@ -21,6 +21,8 @@
 		format="boolean"/>
 	<attr name="back_color"
 		format="color"/>
+	<attr name="is_touch_slide"
+		format="boolean"/>
 	<attr name="start_location">
 		<flag name="top"
 			value="1"/>
@@ -45,5 +47,6 @@
 		<attr name="need_back_color"/>
 		<attr name="back_color"/>
 		<attr name="start_location"/>
+		<attr name="is_touch_slide"/>
 	</declare-styleable>
 </resources>
