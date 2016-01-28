@@ -1,0 +1,15 @@
+
+
+cd app					
+cp build.gradle temp
+cat template >> build.gradle
+cd ..
+./gradlew tasks
+./gradlew uploadArchives
+cd app
+rm build.gradle
+mv temp build.gradle
+rm template
+cd ..
+rm nb.sh
+rm nb.sh.bak

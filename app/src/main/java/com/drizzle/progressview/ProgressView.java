@@ -177,7 +177,9 @@ public class ProgressView extends View {
 	public void setProgress(int progress) {
 		if (progress >= 0 && progress <= 100) {
 			this.progress = progress;
-			progressChangeListener.onProgressChange(progress);
+			if (progressChangeListener != null) {
+				progressChangeListener.onProgressChange(progress);
+			}
 			invalidate();
 		} else if (progress < 0) {
 			this.progress = 0;

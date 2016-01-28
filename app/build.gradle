@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+//apply plugin: 'maven'
+//apply plugin: 'signing'
 
 android {
 	compileSdkVersion 23
@@ -8,7 +10,7 @@ android {
 		minSdkVersion 14
 		targetSdkVersion 23
 		versionCode 1
-		versionName "1.0"
+		versionName "2.0"
 	}
 	buildTypes {
 		release {
@@ -20,3 +22,29 @@ android {
 
 dependencies {
 }
+
+//signing {
+//	required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+//	sign configurations.archives
+//}
+//
+//uploadArchives {
+//	configuration = configurations.archives
+//	repositories.mavenDeployer {
+//		beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+//		repository(url: 'http://127.0.0.1:8081/nexus/content/repositories/1.0/') {//仓库地址
+//			authentication(userName: "admin",//用户名
+//				password: "admin123")//密码
+//		}
+//
+//		pom.project {
+//			name 'progerssview'  //依赖名
+//			packaging 'aar'    //打包方式
+//			description 'none' //描述
+//			url 'http://127.0.0.1:8081/nexus/content/repositories/1.0/'//仓库地址
+//			groupId "com.drizzle.progressview"
+//			artifactId rootProject.name //依赖项目名
+//			version android.defaultConfig.versionName   //依赖版本名
+//		}
+//	}
+//}
